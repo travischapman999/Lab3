@@ -4,18 +4,18 @@
     {
         public string EquipmentName { get; set; } = string.Empty;
         public EquipmentSlot Slot { get; set; }
-        public StatBoostType StatBoostType { get; set; }
+        public StatBoostType StatBoosted { get; set; }
         public int BoostValue { get; set; }
 
         public Equipment()
         {
         }
 
-        public Equipment(string name, EquipmentSlot slot, StatBoostType statBoostType, int boostValue)
+        public Equipment(string name, EquipmentSlot slot, StatBoostType statBoosted, int boostValue)
         {
             EquipmentName = name;
             Slot = slot;
-            StatBoostType = statBoostType;
+            StatBoosted = statBoosted;
             BoostValue = boostValue;
         }
     }
@@ -34,6 +34,7 @@
     {
         Health,
         Power,
-        Luck
+        Luck,
+        Mana
     }
 }
