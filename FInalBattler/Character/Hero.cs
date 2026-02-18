@@ -3,7 +3,7 @@ using FinalBattler.Interfaces;
 
 namespace FinalBattler.Character
 {
-    public class Hero : Creations, IHero
+    public class Hero : Creations, IHero, IDamageCalculator
     {
         public int Health { get; set; }
         public int Power { get; set; }
@@ -15,6 +15,44 @@ namespace FinalBattler.Character
         public List<Skill> Skills { get; set; }
         public List<Spell> Spells { get; set; }
         public List<Equipment> Equipment { get; set; } = new List<Equipment>();
+        public Hero()
+        {
+            Name = "Unknown";
+            Console.WriteLine("Pick your class(as number)");
+            int i = 0;
+            foreach(CombatClass combatClass in Enum.GetValues<CombatClass>())
+            {
+                Console.WriteLine($"{i}: {combatClass}");
+                i++;
+            }
+            CombatClass = (CombatClass)int.Parse(Console.ReadLine());
+            Level = 0;
+            Health = 1;
+            Power = 1;
+            Luck = 1;
+            Mana = 1;
+            this.LevelUp();
+            this.CalculateTotals();
+        }
+        public Hero(string name)
+        {
+            Name = name;
+            Console.WriteLine("Pick your class(as number)");
+            int i = 0;
+            foreach(CombatClass combatClass in Enum.GetValues<CombatClass>())
+            {
+                Console.WriteLine($"{i}: {combatClass}");
+                i++;
+            }
+            CombatClass = (CombatClass)int.Parse(Console.ReadLine());
+            Level = 0;
+            Health = 1;
+            Power = 1;
+            Luck = 1;
+            Mana = 1;
+            this.LevelUp();
+            this.CalculateTotals();
+        }
         public void DisplayStats(bool showTotalStats)
         {
             if (showTotalStats)
@@ -52,13 +90,13 @@ namespace FinalBattler.Character
                     Mana += random.Next(1, 5);
                     break;
                 case CombatClass.Wizard:
-                    Health += random.Next(1, 15);
+                    Health += random.Next(5, 15);
                     Power += random.Next(3, 5);
                     Luck += random.Next(1, 3);
                     Mana += random.Next(3, 8);
                     break;
                 case CombatClass.Rogue:
-                    Health += random.Next(1, 15);
+                    Health += random.Next(5, 15);
                     Power += random.Next(1, 3);
                     Luck += random.Next(3, 5);
                     Mana += random.Next(1, 5);
@@ -101,23 +139,9 @@ namespace FinalBattler.Character
                 Console.WriteLine($"{equipment.EquipmentName} : +{equipment.BoostValue} {equipment.StatBoosted}");
             }
         }
-
-        public Hero()
+        public int CalculateDamage()
         {
-            Name = "Unknown";
-            Console.WriteLine("Pick your class(as number)");
-            int i = 0;
-            foreach(CombatClass combatClass in Enum.GetValues<CombatClass>())
-            {
-                Console.WriteLine($"{i}: {combatClass}");
-                i++;
-            }
-            CombatClass = (CombatClass)int.Parse(Console.ReadLine());
-            Level = 0;
-            Health = 1;
-            Power = 1;
-            Luck = 1;
-            Mana = 1;
+            return TotalPower;
         }
     }
 }
